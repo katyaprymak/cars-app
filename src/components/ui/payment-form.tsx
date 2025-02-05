@@ -10,51 +10,28 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-interface FormData {
-    type: string
-    productName: string
-    price: string
-    quantity: number
-    adjustQuantity: boolean
-    collectTax: boolean
-    collectAddress: boolean
-    requirePhone: boolean
-    limitPayments: boolean
-}
-
 export function PaymentForm() {
     const [isAdvancedOpen, setIsAdvancedOpen] = useState(false)
     const [previewMode, setPreviewMode] = useState<"mobile" | "desktop">("mobile")
-    const [formData, setFormData] = useState<FormData>({
-        type: "products",
-        productName: "Your product/service",
-        price: "250.00",
-        quantity: 1,
-        adjustQuantity: false,
-        collectTax: false,
-        collectAddress: false,
-        requirePhone: false,
-        limitPayments: false,
-    })
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Header */}
             <header className="flex items-center justify-between px-4 py-3 bg-white border-b">
                 <Button variant="ghost" size="icon">
                     <X className="h-5 w-5" />
                 </Button>
                 <h1 className="text-lg font-medium">Create a payment link</h1>
-                <Button className="bg-indigo-600 hover:bg-indigo-700 text-white">Create link</Button>
+                <Button variant="default" className="bg-indigo-600 hover:bg-indigo-700">
+                    Create link
+                </Button>
             </header>
 
             <main className="container mx-auto p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Left Panel - Form */}
                     <div className="space-y-6">
                         <div className="space-y-4">
                             <Label>Select type</Label>
-                            <Select value={formData.type} onValueChange={(value) => setFormData({ ...formData, type: value })}>
+                            <Select defaultValue="products">
                                 <SelectTrigger>
                                     <SelectValue placeholder="Products or subscriptions" />
                                 </SelectTrigger>
@@ -79,40 +56,19 @@ export function PaymentForm() {
                                         <img src="/placeholder.svg?height=64&width=64" alt="Product" className="h-12 w-12" />
                                     </div>
                                     <div className="flex-1">
-                                        <Input
-                                            value={formData.productName}
-                                            onChange={(e) => setFormData({ ...formData, productName: e.target.value })}
-                                            className="border-0 p-0 text-base font-medium"
-                                        />
-                                        <Input
-                                            type="number"
-                                            value={formData.price}
-                                            onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                                            className="border-0 p-0 text-gray-500"
-                                        />
+                                        <p>Your product/service</p>
+                                        <p className="text-gray-500">250.00 PLN</p>
                                     </div>
                                     <Button variant="ghost" size="icon">
                                         <MoreVertical className="h-4 w-4" />
                                     </Button>
                                 </div>
-
                                 <div>
                                     <Label>Quantity</Label>
-                                    <Input
-                                        type="number"
-                                        value={formData.quantity}
-                                        onChange={(e) => setFormData({ ...formData, quantity: Number.parseInt(e.target.value) })}
-                                        min={1}
-                                        className="w-24"
-                                    />
+                                    <Input type="number" defaultValue="1" className="w-24" />
                                 </div>
-
                                 <div className="flex items-center space-x-2">
-                                    <Checkbox
-                                        id="adjust-quantity"
-                                        checked={formData.adjustQuantity}
-                                        onCheckedChange={(checked) => setFormData({ ...formData, adjustQuantity: checked as boolean })}
-                                    />
+                                    <Checkbox id="adjust-quantity" />
                                     <Label htmlFor="adjust-quantity">Let customers adjust quantity</Label>
                                 </div>
                             </div>
@@ -121,38 +77,19 @@ export function PaymentForm() {
                                 <h2 className="text-lg font-medium">Options</h2>
                                 <div className="space-y-2">
                                     <div className="flex items-center space-x-2">
-                                        <Checkbox
-                                            id="tax"
-                                            checked={formData.collectTax}
-                                            onCheckedChange={(checked) => setFormData({ ...formData, collectTax: checked as boolean })}
-                                        />
+                                        <Checkbox id="tax" />
                                         <Label htmlFor="tax">Collect tax automatically</Label>
                                     </div>
-
                                     <div className="flex items-center space-x-2">
-                                        <Checkbox
-                                            id="address"
-                                            checked={formData.collectAddress}
-                                            onCheckedChange={(checked) => setFormData({ ...formData, collectAddress: checked as boolean })}
-                                        />
+                                        <Checkbox id="address" />
                                         <Label htmlFor="address">Collect customers' addresses</Label>
                                     </div>
-
                                     <div className="flex items-center space-x-2">
-                                        <Checkbox
-                                            id="phone"
-                                            checked={formData.requirePhone}
-                                            onCheckedChange={(checked) => setFormData({ ...formData, requirePhone: checked as boolean })}
-                                        />
+                                        <Checkbox id="phone" />
                                         <Label htmlFor="phone">Require customers to provide a phone number</Label>
                                     </div>
-
                                     <div className="flex items-center space-x-2">
-                                        <Checkbox
-                                            id="limit"
-                                            checked={formData.limitPayments}
-                                            onCheckedChange={(checked) => setFormData({ ...formData, limitPayments: checked as boolean })}
-                                        />
+                                        <Checkbox id="limit" />
                                         <Label htmlFor="limit">Limit the number of payments</Label>
                                     </div>
                                 </div>
@@ -205,7 +142,6 @@ export function PaymentForm() {
                         </div>
                     </div>
 
-                    {/* Right Panel - Preview */}
                     <div className="space-y-4">
                         <div className="flex justify-end gap-2">
                             <Button
@@ -238,8 +174,8 @@ export function PaymentForm() {
 
                                     <div className="space-y-4">
                                         <div>
-                                            <h3 className="font-medium">{formData.productName}</h3>
-                                            <p className="text-2xl font-bold">{formData.price} zł</p>
+                                            <h3 className="font-medium">Your product/service</h3>
+                                            <p className="text-2xl font-bold">250,00 zł</p>
                                             <p className="text-sm text-gray-500">Price of your product/service</p>
                                         </div>
 
