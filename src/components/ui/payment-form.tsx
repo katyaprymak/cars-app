@@ -61,6 +61,16 @@ export function PaymentForm() {
 
   // Handle form submission
   function onSubmit(data: FormValues) {
+    const { email, cardNumber, cardholderName, zipCode } = data;
+
+    alert(`
+      Thank you for your payment!
+      Email: ${email}
+      Cardholder Name: ${cardholderName}
+      Zip Code: ${zipCode}
+      Card Number is hidden for security reasons
+      
+    `);
     console.log("Form submitted:", data);
     // Here you would typically process the payment
     // For example, send the data to your payment processor API
